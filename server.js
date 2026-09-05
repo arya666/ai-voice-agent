@@ -12,6 +12,18 @@ if (!GEMINI_API_KEY) {
 const GEMINI_MODEL = "gemini-3.1-flash-live-preview";
 
 const server = http.createServer((req, res) => {
+  if (req.url === "/twiml") {
+    res.writeHead(200, { "Content-Type": "text/xml" });
+    res.end(`
+<Response>
+  <Connect>
+    <Stream url="wss://ai-voice-agent-kvh8.onrender.com" />
+  </Connect>
+</Response>
+    `);
+    return;
+  }
+
   res.writeHead(200, { "Content-Type": "text/plain" });
   res.end("AI Voice Agent is running");
 });
